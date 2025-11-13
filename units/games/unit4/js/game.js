@@ -188,11 +188,12 @@ function startPhase2() {
 
 // 화면 전환
 function showScreen(screenId) {
-    const screens = ['startScreen', 'estimationScreen', 'estimationResultScreen', 'gameScreen', 'resultScreen', 'leaderboardScreen'];
+    const screens = ['startScreen', 'estimationScreen', 'estimationResultScreen', 'gameScreen', 'resultScreen'];
     screens.forEach(id => {
         document.getElementById(id).classList.add('hidden');
     });
     document.getElementById(screenId).classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 플레이어 상태 업데이트
@@ -514,88 +515,11 @@ function showGameResult() {
         rankingsDiv.appendChild(rankDiv);
     });
     
-    // 게임 기록 저장
-    saveGameRecords();
-    
     showScreen('resultScreen');
     createConfetti();
 }
 
-// 게임 기록 저장
-async function saveGameRecords() {
-    try {
-        for (const player of gameState.players) {
-            const record = {
-                player_name: player.name,
-                estimation_accuracy: player.estimationScore,
-                final_difference: player.finalDifference,
-                total_score: player.estimationScore + player.finalDifference, // 낮을수록 좋음
-                game_date: new Date().toISOString()
-            };
-            
-            await fetch('tables/game_records', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(record)
-            });
-        }
-    } catch (error) {
-        console.error('게임 기록 저장 실패:', error);
-    }
-}
 
-// 리더보드 표시
-async function showLeaderboard() {
-    try {
-        const response = await fetch('tables/game_records?sort=total_score&limit=20');
-        const data = await response.json();
-        
-        const contentDiv = document.getElementById('leaderboardContent');
-        contentDiv.innerHTML = '';
-        
-        if (!data.data || data.data.length === 0) {
-            contentDiv.innerHTML = '<p class="text-center text-gray-600 text-xl">아직 기록이 없습니다.</p>';
-        } else {
-            data.data.forEach((record, index) => {
-                const recordDiv = document.createElement('div');
-                recordDiv.className = `bg-gradient-to-r ${index < 3 ? 'from-yellow-200 to-yellow-300' : 'from-purple-100 to-purple-200'} p-4 rounded-xl mb-3 flex items-center justify-between`;
-                
-                const date = new Date(record.game_date);
-                const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-                
-                recordDiv.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <span class="text-3xl font-black ${index < 3 ? 'text-yellow-600' : 'text-purple-600'}">${index + 1}</span>
-                        <div>
-                            <div class="text-xl font-bold text-gray-800">${record.player_name}</div>
-                            <div class="text-sm text-gray-600">${dateStr}</div>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-sm text-gray-600">어림 오차: ${record.estimation_accuracy.toFixed(1)}mL</div>
-                        <div class="text-sm text-gray-600">최종 오차: ${record.final_difference}mL</div>
-                        <div class="text-lg font-bold text-purple-600">총점: ${record.total_score.toFixed(1)}</div>
-                    </div>
-                `;
-                contentDiv.appendChild(recordDiv);
-            });
-        }
-        
-        showScreen('leaderboardScreen');
-    } catch (error) {
-        console.error('리더보드 로딩 실패:', error);
-        alert('리더보드를 불러오는데 실패했습니다.');
-    }
-}
-
-// 리더보드 숨기기
-function hideLeaderboard() {
-    if (gameState.phase === 'start') {
-        showScreen('startScreen');
-    } else {
-        showScreen('resultScreen');
-    }
-}
 
 // 축하 효과
 function createConfetti() {
