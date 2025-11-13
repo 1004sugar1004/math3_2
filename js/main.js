@@ -60,7 +60,7 @@ function goToUnit(unitNumber) {
                 window.location.href = 'units/unit5.html';
                 break;
             case 6:
-                window.location.href = 'units/unit6.html';
+                window.location.href = 'units/games/unit6/index.html';
                 break;
             default:
                 alert('준비 중인 단원입니다!');

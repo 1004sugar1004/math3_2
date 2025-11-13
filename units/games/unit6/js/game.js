@@ -165,6 +165,10 @@ const elements = {
 // ==================== 초기화 ====================
 function init() {
     // 이벤트 리스너 등록
+    const homeButton = document.getElementById('homeButton');
+    if (homeButton) {
+        homeButton.addEventListener('click', goHome);
+    }
     elements.setupButton.addEventListener('click', showSetupScreen);
     elements.backToStartButton.addEventListener('click', () => switchScreen('startScreen'));
     elements.startGameButton.addEventListener('click', startGame);
@@ -1106,6 +1110,11 @@ function displayGraphResult(allCorrect, results) {
     
     // 스크롤 이동
     elements.graphResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ==================== 홈으로 이동 ====================
+function goHome() {
+    window.location.href = '../../../index.html';
 }
 
 // ==================== 초기화 실행 ====================
