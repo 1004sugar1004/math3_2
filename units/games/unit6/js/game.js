@@ -110,22 +110,8 @@ function playFailSound() {
 const elements = {
     // 화면
     startScreen: document.getElementById('startScreen'),
-    setupScreen: document.getElementById('setupScreen'),
     gameScreen: document.getElementById('gameScreen'),
     resultScreen: document.getElementById('resultScreen'),
-    
-    // 시작 화면
-    setupButton: document.getElementById('setupButton'),
-    
-    // 설정 화면
-    numTeams: document.getElementById('numTeams'),
-    playersPerTeam: document.getElementById('playersPerTeam'),
-    bagsPerPlayer: document.getElementById('bagsPerPlayer'),
-
-    difficulty: document.getElementById('difficulty'),
-    teamNamesContainer: document.getElementById('teamNamesContainer'),
-    backToStartButton: document.getElementById('backToStartButton'),
-    startGameButton: document.getElementById('startGameButton'),
     
     // 게임 화면
     currentTeamName: document.getElementById('currentTeamName'),
@@ -181,14 +167,9 @@ function init() {
         });
     }
     
-    elements.backToStartButton.addEventListener('click', () => switchScreen('startScreen'));
-    elements.startGameButton.addEventListener('click', startGame);
     elements.restartButton.addEventListener('click', resetGame);
     elements.clearGraphButton.addEventListener('click', clearGraph);
     elements.checkGraphButton.addEventListener('click', checkGraph);
-    
-    // 설정 화면 이벤트
-    elements.numTeams.addEventListener('change', updateTeamNameInputs);
     
     // 콩 주머니 클릭 이벤트 (타이밍 게임)
     elements.beanbag.addEventListener('click', onBeanbagClick);
@@ -225,77 +206,7 @@ function startGameDirectly() {
     createScoreboard();
 }
 
-// ==================== 설정 화면 표시 ====================
-function showSetupScreen() {
-    switchScreen('setupScreen');
-    updateTeamNameInputs();
-}
 
-function updateTeamNameInputs() {
-    const numTeams = parseInt(elements.numTeams.value);
-    elements.teamNamesContainer.innerHTML = '';
-    
-    for (let i = 0; i < numTeams; i++) {
-        const teamDiv = document.createElement('div');
-        teamDiv.className = 'team-name-input';
-        
-        const color = colorPalette[i % colorPalette.length].color;
-        const defaultName = defaultTeamNames[i % defaultTeamNames.length];
-        
-        teamDiv.innerHTML = `
-            <label>
-                <div class="team-color-indicator" style="background: ${color};"></div>
-                모둠 ${i + 1}
-            </label>
-            <input type="text" 
-                   id="teamName${i}" 
-                   value="${defaultName}" 
-                   placeholder="모둠 이름 입력"
-                   maxlength="10">
-        `;
-        
-        elements.teamNamesContainer.appendChild(teamDiv);
-    }
-}
-
-// ==================== 게임 시작 ====================
-function startGame() {
-    // 설정 값 읽기
-    gameConfig.numTeams = parseInt(elements.numTeams.value);
-    gameConfig.playersPerTeam = parseInt(elements.playersPerTeam.value);
-    gameConfig.bagsPerPlayer = Math.min(5, Math.max(1, parseInt(elements.bagsPerPlayer.value))); // 1~5로 제한
-    gameConfig.maxRounds = 1; // 항상 1라운드로 고정
-    gameConfig.difficulty = elements.difficulty.value;
-    
-    // 던지기 횟수 검증
-    if (gameConfig.bagsPerPlayer < 1 || gameConfig.bagsPerPlayer > 5) {
-        alert('던지기 횟수는 1~5개 사이여야 합니다.');
-        return;
-    }
-    
-    // 모둠 생성
-    gameState.teams = [];
-    for (let i = 0; i < gameConfig.numTeams; i++) {
-        const nameInput = document.getElementById(`teamName${i}`);
-        const teamName = nameInput ? nameInput.value.trim() : defaultTeamNames[i];
-        
-        gameState.teams.push({
-            name: teamName || `모둠${i + 1}`,
-            players: gameConfig.playersPerTeam,
-            score: 0,
-            color: colorPalette[i % colorPalette.length].color,
-            class: colorPalette[i % colorPalette.length].class
-        });
-    }
-    
-    // 게임 상태 초기화
-    resetGameState();
-    
-    // 게임 화면으로 전환
-    switchScreen('gameScreen');
-    updateUI();
-    createScoreboard();
-}
 
 function resetGameState() {
     gameState.currentTeamIndex = 0;
