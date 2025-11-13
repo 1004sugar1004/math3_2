@@ -3,10 +3,10 @@
 /* 단원 헤더 */
 .unit-header {
     background: rgba(255, 255, 255, 0.95);
-    padding: 30px 20px;
+    padding: 20px;
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .unit-header .container {
@@ -60,8 +60,8 @@
 
 /* 메인 콘텐츠 */
 .unit-main {
-    min-height: calc(100vh - 300px);
-    padding: 40px 20px;
+    min-height: calc(100vh - 200px);
+    padding: 20px;
 }
 
 /* 준비 중 화면 */
@@ -304,18 +304,19 @@
 /* 게임 iframe 컨테이너 */
 .game-frame-container {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     background: white;
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    height: calc(100vh - 250px);
 }
 
 .game-frame-container iframe {
     width: 100%;
-    height: 85vh;
-    min-height: 600px;
+    height: 100%;
+    min-height: 100%;
     border: none;
     display: block;
 }
@@ -381,6 +382,15 @@
         padding: 12px 25px;
         font-size: 1rem;
     }
+
+    .game-frame-container {
+        height: calc(100vh - 220px);
+        border-radius: 10px;
+    }
+
+    .unit-main {
+        padding: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -403,5 +413,19 @@
     .score-board {
         flex-direction: column;
         gap: 15px;
+    }
+
+    .game-frame-container {
+        height: calc(100vh - 200px);
+        border-radius: 8px;
+    }
+
+    .unit-main {
+        padding: 5px;
+    }
+
+    .unit-header {
+        padding: 15px;
+        margin-bottom: 10px;
     }
 }
