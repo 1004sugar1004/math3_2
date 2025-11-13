@@ -110,13 +110,21 @@ function playFailSound() {
 const elements = {
     // 화면
     startScreen: document.getElementById('startScreen'),
+    setupScreen: document.getElementById('setupScreen'),
     gameScreen: document.getElementById('gameScreen'),
     resultScreen: document.getElementById('resultScreen'),
     
-    // 설정 입력
+    // 시작 화면
+    setupButton: document.getElementById('setupButton'),
+    
+    // 설정 화면
     numTeams: document.getElementById('numTeams'),
     playersPerTeam: document.getElementById('playersPerTeam'),
     bagsPerPlayer: document.getElementById('bagsPerPlayer'),
+    difficulty: document.getElementById('difficulty'),
+    teamNamesContainer: document.getElementById('teamNamesContainer'),
+    backToStartButton: document.getElementById('backToStartButton'),
+    startGameButton: document.getElementById('startGameButton'),
     
     // 게임 화면
     currentTeamName: document.getElementById('currentTeamName'),
@@ -160,46 +168,77 @@ function init() {
     if (homeButton) {
         homeButton.addEventListener('click', goHome);
     }
-    
-    // 시작 화면 클릭시 게임 시작
-    const startScreen = document.getElementById('startScreen');
-    if (startScreen) {
-        startScreen.addEventListener('click', (e) => {
-            // 홈 버튼 클릭이 아닌 경우에만 게임 시작
-            if (!e.target.closest('.home-button')) {
-                startGameDirectly();
-            }
-        });
-    }
-    
+    elements.setupButton.addEventListener('click', showSetupScreen);
+    elements.backToStartButton.addEventListener('click', () => switchScreen('startScreen'));
+    elements.startGameButton.addEventListener('click', startGame);
     elements.restartButton.addEventListener('click', resetGame);
     elements.clearGraphButton.addEventListener('click', clearGraph);
     elements.checkGraphButton.addEventListener('click', checkGraph);
+    
+    // 설정 화면 이벤트
+    elements.numTeams.addEventListener('change', updateTeamNameInputs);
     
     // 콩 주머니 클릭 이벤트 (타이밍 게임)
     elements.beanbag.addEventListener('click', onBeanbagClick);
     elements.beanbag.addEventListener('touchend', onBeanbagClick);
 }
 
-// ==================== 바로 게임 시작 ====================
-function startGameDirectly() {
-    // 설정값 읽기
-    gameConfig.numTeams = parseInt(elements.numTeams?.value || 4);
-    gameConfig.playersPerTeam = parseInt(elements.playersPerTeam?.value || 3);
-    gameConfig.bagsPerPlayer = parseInt(elements.bagsPerPlayer?.value || 5);
-    gameConfig.maxRounds = 1;
-    gameConfig.difficulty = 'normal';
+// ==================== 설정 화면 표시 ====================
+function showSetupScreen() {
+    switchScreen('setupScreen');
+    updateTeamNameInputs();
+}
+
+function updateTeamNameInputs() {
+    const numTeams = parseInt(elements.numTeams.value);
+    elements.teamNamesContainer.innerHTML = '';
     
-    // 값 검증
-    gameConfig.numTeams = Math.max(2, Math.min(8, gameConfig.numTeams));
-    gameConfig.playersPerTeam = Math.max(1, Math.min(6, gameConfig.playersPerTeam));
-    gameConfig.bagsPerPlayer = Math.max(1, Math.min(10, gameConfig.bagsPerPlayer));
+    for (let i = 0; i < numTeams; i++) {
+        const teamDiv = document.createElement('div');
+        teamDiv.className = 'team-name-input';
+        
+        const color = colorPalette[i % colorPalette.length].color;
+        const defaultName = defaultTeamNames[i % defaultTeamNames.length];
+        
+        teamDiv.innerHTML = `
+            <label>
+                <div class="team-color-indicator" style="background: ${color};"></div>
+                모둠 ${i + 1}
+            </label>
+            <input type="text" 
+                   id="teamName${i}" 
+                   value="${defaultName}" 
+                   placeholder="모둠 이름 입력"
+                   maxlength="10">
+        `;
+        
+        elements.teamNamesContainer.appendChild(teamDiv);
+    }
+}
+
+// ==================== 게임 시작 ====================
+function startGame() {
+    // 설정 값 읽기
+    gameConfig.numTeams = parseInt(elements.numTeams.value);
+    gameConfig.playersPerTeam = parseInt(elements.playersPerTeam.value);
+    gameConfig.bagsPerPlayer = Math.min(5, Math.max(1, parseInt(elements.bagsPerPlayer.value))); // 1~5로 제한
+    gameConfig.maxRounds = 1; // 항상 1라운드로 고정
+    gameConfig.difficulty = elements.difficulty.value;
     
-    // 모둠 생성 (기본 이름 사용)
+    // 던지기 횟수 검증
+    if (gameConfig.bagsPerPlayer < 1 || gameConfig.bagsPerPlayer > 5) {
+        alert('던지기 횟수는 1~5개 사이여야 합니다.');
+        return;
+    }
+    
+    // 모둠 생성
     gameState.teams = [];
     for (let i = 0; i < gameConfig.numTeams; i++) {
+        const nameInput = document.getElementById(`teamName${i}`);
+        const teamName = nameInput ? nameInput.value.trim() : defaultTeamNames[i];
+        
         gameState.teams.push({
-            name: defaultTeamNames[i],
+            name: teamName || `모둠${i + 1}`,
             players: gameConfig.playersPerTeam,
             score: 0,
             color: colorPalette[i % colorPalette.length].color,
@@ -238,6 +277,12 @@ function switchScreen(screenId) {
         screen.classList.remove('active');
     });
     document.getElementById(screenId).classList.add('active');
+    
+    // 화면 전환 시 맨 위로 스크롤
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 // ==================== UI 업데이트 ====================
