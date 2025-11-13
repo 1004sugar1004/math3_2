@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 놀이에 풍덩! - 초등 3-2학기</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Gamja+Flower&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wave-bg"></div>
+    
+    <header>
+        <div class="container">
+            <h1 class="main-title">🌊 수학 놀이에 풍덩! 🌊</h1>
+            <p class="subtitle">초등학교 3학년 2학기 수학을 재미있게 배워요!</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="units-grid">
+            <!-- 1단원: 곱셈 -->
+            <div class="unit-card" data-unit="1">
+                <div class="unit-icon">✖️</div>
+                <div class="unit-content">
+                    <h2 class="unit-number">1단원</h2>
+                    <h3 class="unit-title">곱셈</h3>
+                    <p class="unit-description">곱셈을 재미있게 배우는 놀이</p>
+                    <button class="play-button" onclick="goToUnit(1)">
+                        <span>놀이하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                </div>
+                <div class="unit-badge">준비중</div>
+            </div>
+
+            <!-- 2단원: 나눗셈 -->
+            <div class="unit-card" data-unit="2">
+                <div class="unit-icon">➗</div>
+                <div class="unit-content">
+                    <h2 class="unit-number">2단원</h2>
+                    <h3 class="unit-title">나눗셈</h3>
+                    <p class="unit-description">나눗셈을 쉽게 이해하는 놀이</p>
+                    <button class="play-button" onclick="goToUnit(2)">
+                        <span>놀이하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                </div>
+                <div class="unit-badge">준비중</div>
+            </div>
+
+            <!-- 3단원: 원 -->
+            <div class="unit-card" data-unit="3">
+                <div class="unit-icon">⭕</div>
+                <div class="unit-content">
+                    <h2 class="unit-number">3단원</h2>
+                    <h3 class="unit-title">원</h3>
+                    <p class="unit-description">원의 성질을 탐험하는 놀이</p>
+                    <button class="play-button" onclick="goToUnit(3)">
+                        <span>놀이하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                </div>
+                <div class="unit-badge">준비중</div>
+            </div>
+
+            <!-- 4단원: 들이와 무게 -->
+            <div class="unit-card" data-unit="4">
+                <div class="unit-icon">⚖️</div>
+                <div class="unit-content">
+                    <h2 class="unit-number">4단원</h2>
+                    <h3 class="unit-title">들이와 무게</h3>
+                    <p class="unit-description">측정을 체험하는 놀이</p>
+                    <button class="play-button" onclick="goToUnit(4)">
+                        <span>놀이하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                </div>
+                <div class="unit-badge">준비중</div>
+            </div>
+
+            <!-- 5단원: 분수 -->
+            <div class="unit-card" data-unit="5">
+                <div class="unit-icon">🍕</div>
+                <div class="unit-content">
+                    <h2 class="unit-number">5단원</h2>
+                    <h3 class="unit-title">분수</h3>
+                    <p class="unit-description">분수를 직관적으로 배우는 놀이</p>
+                    <button class="play-button" onclick="goToUnit(5)">
+                        <span>놀이하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                </div>
+                <div class="unit-badge">준비중</div>
+            </div>
+
+            <!-- 6단원: 그림그래프 -->
+            <div class="unit-card" data-unit="6">
+                <div class="unit-icon">📊</div>
+                <div class="unit-content">
+                    <h2 class="unit-number">6단원</h2>
+                    <h3 class="unit-title">그림그래프</h3>
+                    <p class="unit-description">그래프를 만들고 읽는 놀이</p>
+                    <button class="play-button" onclick="goToUnit(6)">
+                        <span>놀이하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                </div>
+                <div class="unit-badge">준비중</div>
+            </div>
+        </div>
+
+        <div class="footer-message">
+            <p>🎮 각 단원을 클릭하면 재미있는 놀이를 할 수 있어요!</p>
+            <p>💪 모든 놀이를 완료하고 수학 마스터가 되어보세요!</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 수학 놀이에 풍덩! - 즐겁게 배우는 수학</p>
+            <p class="contact-info">오류 문의: nalrary@mensakorea.org</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

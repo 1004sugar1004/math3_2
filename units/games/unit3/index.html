@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>황금 열쇠를 찾아라 - 수학 게임</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔑 황금 열쇠를 찾아라</h1>
+            <p class="subtitle">원의 반지름을 활용한 수학 게임 (모눈 1칸 = 1cm)</p>
+        </header>
+
+        <div class="game-container">
+            <!-- 왼쪽: 게임 컨트롤 패널 -->
+            <div class="control-panel">
+                <!-- 게임 정보 -->
+                <div class="info-panel">
+                <div class="player-info">
+                    <h3>현재 플레이어</h3>
+                    <div class="current-player">
+                        <div class="player-indicator" id="currentPlayerIndicator"></div>
+                        <span id="currentPlayerName">플레이어 1</span>
+                    </div>
+                </div>
+
+                <div class="scores">
+                    <h3>점수</h3>
+                    <div class="score-list" id="scoreList"></div>
+                </div>
+
+                <div class="game-rules">
+                    <h3 class="game-rules-toggle" id="gameRulesToggle">
+                        게임 방법 <span class="toggle-icon">▼</span>
+                    </h3>
+                    <ol class="game-rules-content" id="gameRulesContent">
+                        <li><strong>모드 선택</strong>: 혼자 or 2인 대결</li>
+                        <li><strong>혼자하기</strong>: 컴퓨터가 랜덤 선택</li>
+                        <li><strong>2인 대결</strong>: 가위바위보로 승부!
+                            <ul>
+                                <li>각자 선택 → 이긴 사람이 원 그리기</li>
+                            </ul>
+                        </li>
+                        <li>반지름 결정:
+                            <ul>
+                                <li>가위 → 반지름 2cm</li>
+                                <li>바위 → 반지름 1cm</li>
+                                <li>보 → 반지름 3cm</li>
+                            </ul>
+                        </li>
+                        <li>해당 깃발 선택 → 원 그리기</li>
+                        <li>원 안의 황금 열쇠 획득!</li>
+                        <li>더 많이 모은 사람이 승리!</li>
+                    </ol>
+                </div>
+
+                <button class="btn-reset" id="resetBtn">게임 초기화</button>
+            </div>
+            
+            <!-- 모드 선택 화면 -->
+                <div class="mode-select-section" id="modeSelectSection">
+                    <h2>게임 모드 선택</h2>
+                    
+                    <!-- 플레이어 이름 입력 -->
+                    <div class="player-name-section">
+                        <h3>플레이어 이름 입력</h3>
+                        <div class="name-input-container">
+                            <div class="name-input-group">
+                                <label for="player1Name">플레이어 1</label>
+                                <input type="text" id="player1NameInput" class="name-input" placeholder="이름" maxlength="10" value="플레이어 1">
+                            </div>
+                            <div class="name-input-group">
+                                <label for="player2Name">플레이어 2</label>
+                                <input type="text" id="player2NameInput" class="name-input" placeholder="이름" maxlength="10" value="플레이어 2">
+                            </div>
+                        </div>
+                        <p class="name-hint">💡 혼자하기 모드는 플레이어 1 이름만 사용됩니다</p>
+                    </div>
+                    
+                    <div class="mode-buttons">
+                        <button class="mode-btn" id="soloModeBtn">
+                            <span class="mode-icon">👤</span>
+                            <span class="mode-title">혼자하기</span>
+                            <span class="mode-desc">컴퓨터가 랜덤으로 결과 선택</span>
+                        </button>
+                        <button class="mode-btn" id="twoPlayerModeBtn">
+                            <span class="mode-icon">👥</span>
+                            <span class="mode-title">2인 대결</span>
+                            <span class="mode-desc">가위바위보로 승부!</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 1인 모드 가위바위보 -->
+                <div class="rps-section hidden" id="soloRpsSection">
+                    <h3>가위바위보</h3>
+                    <p class="rps-instruction">컴퓨터가 자동으로 가위바위보 결과를 정합니다!</p>
+                    <div class="rps-action">
+                        <button class="rps-start-btn" id="soloRpsStartBtn">
+                            <span class="rps-icon">✊✌️🖐️</span>
+                            <span>가위바위보 시작!</span>
+                        </button>
+                    </div>
+                    <div class="rps-result" id="soloRpsResult"></div>
+                    
+                    <!-- 점수 표시 -->
+                    <div class="rps-score-display" id="soloScoreDisplay">
+                        <div class="score-item-inline">
+                            <span class="score-label" id="soloScoreLabel">플레이어 1</span>
+                            <span class="score-value">🔑 <strong id="soloScoreValue">0</strong>개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2인 모드 가위바위보 -->
+                <div class="rps-2player-section hidden" id="twoPlayerRpsSection">
+                    <h3>2인 가위바위보 대결</h3>
+                    <p class="rps-instruction">컴퓨터가 양쪽 플레이어의 가위바위보를 자동으로 정합니다!</p>
+                    <div class="rps-action">
+                        <button class="rps-start-btn" id="twoPlayerRpsStartBtn">
+                            <span class="rps-icon">✊✌️🖐️</span>
+                            <span>가위바위보 대결 시작!</span>
+                        </button>
+                    </div>
+                    <div class="rps-2player-container" id="rpsResultContainer">
+                        <div class="rps-player-result" id="player1Result">
+                            <h4 style="color: #ff6b6b;">플레이어 1</h4>
+                            <div class="rps-choice-display">?</div>
+                        </div>
+
+                        <div class="rps-vs">VS</div>
+
+                        <div class="rps-player-result" id="player2Result">
+                            <h4 style="color: #4ecdc4;">플레이어 2</h4>
+                            <div class="rps-choice-display">?</div>
+                        </div>
+                    </div>
+                    <div class="rps-result" id="twoPlayerRpsResult"></div>
+                    
+                    <!-- 점수 표시 -->
+                    <div class="rps-score-display" id="twoPlayerScoreDisplay">
+                        <div class="score-items-row">
+                            <div class="score-item-inline">
+                                <span class="score-label" style="color: #ff6b6b;" id="player1ScoreLabel">플레이어 1</span>
+                                <span class="score-value">🔑 <strong id="player1ScoreValue">0</strong>개</span>
+                            </div>
+                            <div class="score-divider">|</div>
+                            <div class="score-item-inline">
+                                <span class="score-label" style="color: #4ecdc4;" id="player2ScoreLabel">플레이어 2</span>
+                                <span class="score-value">🔑 <strong id="player2ScoreValue">0</strong>개</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flag-section hidden" id="flagSection">
+                    <h3>깃발 선택</h3>
+                    <p id="flagInstruction">승리! 보드에서 반짝이는 깃발을 클릭하세요</p>
+                </div>
+                </div>
+            
+            <!-- 오른쪽: 게임 보드 -->
+            <div class="game-board-container">
+                <div class="board-section" id="boardSection">
+                    <svg id="gameBoard" viewBox="0 0 750 750" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 배경 -->
+                        <defs>
+                            <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#bbb" stroke-width="1"/>
+                            </pattern>
+                            <pattern id="gridBold" width="250" height="250" patternUnits="userSpaceOnUse">
+                                <path d="M 250 0 L 0 0 0 250" fill="none" stroke="#888" stroke-width="2"/>
+                            </pattern>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- 배경색 -->
+                        <rect width="750" height="750" fill="#fffacd"/>
+                        
+                        <!-- 그리드 선들 -->
+                        <g id="gridLines"></g>
+                        
+                        <!-- 모눈 교차점 표시 -->
+                        <g id="gridPoints"></g>
+                        
+                        <!-- 눈금자 표시 -->
+                        <g id="ruler">
+                            <!-- 상단 눈금 -->
+                            <line x1="25" y1="15" x2="725" y2="15" stroke="#333" stroke-width="2"/>
+                            <text x="375" y="12" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">1칸 = 1cm</text>
+                            
+                            <!-- 눈금 표시 (상단) -->
+                            <line x1="25" y1="15" x2="25" y2="20" stroke="#333" stroke-width="2"/>
+                            <text x="25" y="12" font-size="10" fill="#333" text-anchor="middle">0</text>
+                            
+                            <line x1="275" y1="15" x2="275" y2="20" stroke="#333" stroke-width="2"/>
+                            <text x="275" y="12" font-size="10" fill="#333" text-anchor="middle">5</text>
+                            
+                            <line x1="525" y1="15" x2="525" y2="20" stroke="#333" stroke-width="2"/>
+                            <text x="525" y="12" font-size="10" fill="#333" text-anchor="middle">10</text>
+                            
+                            <line x1="725" y1="15" x2="725" y2="20" stroke="#333" stroke-width="2"/>
+                            <text x="725" y="12" font-size="10" fill="#333" text-anchor="middle">14</text>
+                            
+                            <!-- 좌측 눈금 -->
+                            <line x1="15" y1="25" x2="15" y2="725" stroke="#333" stroke-width="2"/>
+                            
+                            <line x1="15" y1="25" x2="20" y2="25" stroke="#333" stroke-width="2"/>
+                            <text x="12" y="28" font-size="10" fill="#333" text-anchor="end">0</text>
+                            
+                            <line x1="15" y1="275" x2="20" y2="275" stroke="#333" stroke-width="2"/>
+                            <text x="12" y="278" font-size="10" fill="#333" text-anchor="end">5</text>
+                            
+                            <line x1="15" y1="525" x2="20" y2="525" stroke="#333" stroke-width="2"/>
+                            <text x="12" y="528" font-size="10" fill="#333" text-anchor="end">10</text>
+                            
+                            <line x1="15" y1="725" x2="20" y2="725" stroke="#333" stroke-width="2"/>
+                            <text x="12" y="728" font-size="10" fill="#333" text-anchor="end">14</text>
+                        </g>
+                        
+                        <!-- 게임 영역 (섬 모양) - 반투명으로 변경하여 모눈이 보이도록 -->
+                        <path d="M 125 75 Q 175 55 225 75 L 325 65 Q 425 60 525 75 L 605 105 Q 645 175 645 275 L 635 425 Q 625 525 575 605 L 475 665 Q 375 685 275 675 L 175 645 Q 125 605 115 525 L 105 375 Q 110 225 125 75 Z" 
+                              fill="#e8f5e9" fill-opacity="0.7" stroke="#66bb6a" stroke-width="3"/>
+                        
+                        <!-- 황금 열쇠 그룹 -->
+                        <g id="keysGroup"></g>
+                        
+                        <!-- 원 그룹 (플레이어가 그린 원들) -->
+                        <g id="circlesGroup"></g>
+                        
+                        <!-- 수집된 열쇠 표시 그룹 -->
+                        <g id="collectedKeysGroup"></g>
+                        
+                        <!-- 깃발 그룹 -->
+                        <g id="flagsGroup"></g>
+                        
+                        <!-- 보물상자 -->
+                        <g id="treasure">
+                            <rect x="505" y="305" width="60" height="50" fill="#daa520" stroke="#8b6914" stroke-width="2" rx="5"/>
+                            <rect x="505" y="305" width="60" height="20" fill="#ffd700" stroke="#8b6914" stroke-width="2" rx="5"/>
+                            <circle cx="535" cy="315" r="4" fill="#8b6914"/>
+                        </g>
+                        
+                        <!-- 나무 장식들 -->
+                        <g id="trees">
+                            <!-- 큰 나무 -->
+                            <ellipse cx="205" cy="455" rx="25" ry="30" fill="#2e7d32"/>
+                            <rect x="200" y="465" width="10" height="25" fill="#5d4037"/>
+                            
+                            <ellipse cx="425" cy="205" rx="20" ry="25" fill="#2e7d32"/>
+                            <rect x="420" y="220" width="10" height="20" fill="#5d4037"/>
+                            
+                            <!-- 소나무 -->
+                            <polygon points="305,525 285,555 325,555" fill="#1b5e20"/>
+                            <polygon points="305,545 290,570 320,570" fill="#1b5e20"/>
+                            <rect x="300" y="570" width="10" height="15" fill="#5d4037"/>
+                            
+                            <polygon points="485,305 470,330 500,330" fill="#1b5e20"/>
+                            <polygon points="485,320 475,340 495,340" fill="#1b5e20"/>
+                            <rect x="480" y="340" width="10" height="12" fill="#5d4037"/>
+                            
+                            <!-- 풀 -->
+                            <ellipse cx="215" cy="245" rx="30" ry="15" fill="#66bb6a"/>
+                            <ellipse cx="245" cy="235" rx="25" ry="12" fill="#81c784"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sounds.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

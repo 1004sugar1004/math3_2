@@ -1,0 +1,1095 @@
+/* 전역 스타일 및 CSS 변수 */
+:root {
+    /* 색상 팔레트 */
+    --primary: #FF6B6B;
+    --secondary: #4ECDC4;
+    --background: #F7F7F7;
+    --white: #FFFFFF;
+    --gold: #FFD700;
+    --jewel: #9B59B6;
+    
+    /* 플레이어 색상 */
+    --player1: #FF6B6B;
+    --player2: #4ECDC4;
+    --player3: #95E1D3;
+    --player4: #FFE66D;
+    
+    /* 텍스트 */
+    --text-dark: #2C3E50;
+    --text-light: #7F8C8D;
+    --text-white: #FFFFFF;
+    
+    /* 그림자 */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.15);
+    
+    /* 간격 */
+    --spacing-xs: 6px;
+    --spacing-sm: 10px;
+    --spacing-md: 14px;
+    --spacing-lg: 20px;
+    --spacing-xl: 28px;
+}
+
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.6);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.9);
+}
+
+/* Firefox 스크롤바 */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(102, 126, 234, 0.6) rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* 화면 전환 */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: var(--spacing-lg);
+}
+
+.screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 버튼 스타일 */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--text-dark);
+}
+
+.btn-confirm {
+    background: #10b981;
+    color: var(--white);
+    width: 100%;
+    justify-content: center;
+    font-size: 18px;
+    padding: 16px;
+}
+
+.btn-large {
+    font-size: 20px;
+    padding: 16px 32px;
+}
+
+.btn-small {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+/* ==================== 시작 화면 ==================== */
+.start-container {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.game-title {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.game-subtitle {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xl);
+}
+
+.start-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.option-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.option-group label {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.select-players {
+    padding: 10px 20px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    font-size: 18px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+}
+
+.player-names {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.player-input {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-align: left;
+}
+
+.player-input label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-color-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.player-input input {
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.player-input input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* ==================== 게임 화면 ==================== */
+#gameScreen {
+    display: none;
+}
+
+#gameScreen.active {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.game-container {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    max-width: 1400px;
+    width: 100%;
+    margin: 10px auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 헤더 */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.game-title-small {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.header-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+#soundToggleBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white);
+    transition: all 0.3s ease;
+}
+
+#soundToggleBtn:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+#soundToggleBtn .fa-volume-mute {
+    color: #ff6b6b;
+}
+
+/* 턴 표시 */
+.turn-indicator {
+    text-align: center;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.turn-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: var(--shadow-md);
+}
+
+.turn-player-name {
+    font-size: 18px;
+}
+
+.turn-player-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--white);
+}
+
+.turn-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 2px solid #FFC107;
+    border-radius: 6px;
+    color: #F57C00;
+    font-size: 12px;
+    font-weight: 500;
+    animation: hint-fade-in 0.3s ease;
+}
+
+.turn-hint i {
+    font-size: 14px;
+}
+
+@keyframes hint-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 메인 게임 영역 */
+.game-main {
+    display: grid;
+    grid-template-columns: minmax(270px, 320px) 1fr;
+    gap: 12px;
+    margin-bottom: 6px;
+    align-items: start;
+}
+
+/* 선택 영역 */
+.selection-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.number-area {
+    background: #f9f9f9;
+    padding: var(--spacing-sm);
+    border-radius: 12px;
+    border: 3px solid;
+    overflow: visible;
+    position: relative;
+}
+
+.gold-area {
+    border-color: var(--gold);
+}
+
+.jewel-area {
+    border-color: var(--jewel);
+}
+
+.area-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.area-header i {
+    font-size: 18px;
+}
+
+.gold-area .area-header {
+    color: #b8860b;
+}
+
+.jewel-area .area-header {
+    color: var(--jewel);
+}
+
+.area-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    justify-items: center;
+    align-items: center;
+    padding: 15px 10px;
+    overflow: visible;
+}
+
+.number-grid > * {
+    position: relative;
+}
+
+/* 계산 영역 */
+.calculation-area {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: var(--spacing-md);
+    border-radius: 12px;
+    color: var(--white);
+}
+
+.calculation-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+}
+
+.calc-number {
+    min-width: 50px;
+    text-align: center;
+}
+
+.calc-result {
+    min-width: 50px;
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+}
+
+.calculation-hint {
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* 금화/보석 버튼 스타일 */
+.number-btn {
+    padding: 0;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+.gold-area .number-btn {
+    background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500, #FF8C00);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(255, 165, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    color: #8B4513;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.gold-area .number-btn::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 30%;
+    height: 30%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+    border-radius: 50%;
+}
+
+.jewel-area .number-btn {
+    background: linear-gradient(135deg, 
+        #FF1744 0%, 
+        #F50057 20%, 
+        #D500F9 40%, 
+        #651FFF 60%, 
+        #2979FF 80%, 
+        #00B0FF 100%);
+    /* 10각형 다이아몬드 형태 */
+    clip-path: polygon(
+        50% 0%,      /* 1. 상단 중앙 */
+        67% 10%,     /* 2. 우상단 */
+        85% 25%,     /* 3. 우측 상단 */
+        95% 45%,     /* 4. 우측 중상단 */
+        100% 65%,    /* 5. 우측 중하단 */
+        85% 85%,     /* 6. 우하단 */
+        50% 100%,    /* 7. 하단 중앙 */
+        15% 85%,     /* 8. 좌하단 */
+        0% 65%,      /* 9. 좌측 중하단 */
+        5% 45%,      /* 10. 좌측 중상단 */
+        15% 25%,     /* 11. 좌측 상단 */
+        33% 10%      /* 12. 좌상단 */
+    );
+    box-shadow: 
+        0 6px 12px rgba(213, 0, 249, 0.5),
+        0 2px 4px rgba(101, 31, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.4),
+        inset -3px -3px 6px rgba(101, 31, 255, 0.4);
+    color: var(--white);
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.5);
+    position: relative;
+}
+
+.jewel-area .number-btn:not(.selected)::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25%;
+    height: 15%;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%);
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+
+
+
+.number-btn:hover:not(:disabled) {
+    transform: scale(1.1) translateY(-5px);
+    filter: brightness(1.2);
+}
+
+.gold-area .number-btn:hover:not(:disabled) {
+    box-shadow: 0 8px 16px rgba(255, 165, 0, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.jewel-area .number-btn:hover:not(:disabled) {
+    box-shadow: 
+        0 10px 20px rgba(213, 0, 249, 0.7),
+        0 4px 8px rgba(101, 31, 255, 0.5),
+        0 0 30px rgba(213, 0, 249, 0.4),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.6),
+        inset -3px -3px 6px rgba(101, 31, 255, 0.4);
+    filter: brightness(1.3) saturate(1.2);
+}
+
+.number-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+}
+
+.number-btn.selected {
+    transform: scale(1.15);
+    animation: bounce 0.5s ease;
+}
+
+.gold-area .number-btn.selected {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8),
+                0 0 40px rgba(255, 215, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.jewel-area .number-btn.selected {
+    box-shadow: 
+        0 0 30px rgba(213, 0, 249, 1),
+        0 0 60px rgba(213, 0, 249, 0.7),
+        0 0 90px rgba(101, 31, 255, 0.5),
+        0 10px 20px rgba(213, 0, 249, 0.6),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        inset 3px 3px 8px rgba(255, 255, 255, 0.7),
+        inset -3px -3px 8px rgba(101, 31, 255, 0.5);
+    filter: brightness(1.4) saturate(1.3);
+    animation: jewel-sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes jewel-sparkle {
+    0%, 100% {
+        filter: brightness(1.4) saturate(1.3);
+    }
+    50% {
+        filter: brightness(1.6) saturate(1.5) hue-rotate(10deg);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1.15); }
+    50% { transform: scale(1.25); }
+}
+
+/* 선택 핀 표시 */
+.number-btn.selected {
+    position: relative;
+}
+
+/* 버튼 wrapper */
+.button-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* 핀 마커 스타일 */
+.pin-marker {
+    position: absolute;
+    font-size: 36px;
+    z-index: 1000;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+    animation: pin-appear 0.3s ease;
+    line-height: 1;
+}
+
+.pin-gold {
+    top: -25px;
+    right: -25px;
+}
+
+.pin-jewel {
+    top: -30px;
+    right: -5px;
+}
+
+@keyframes pin-appear {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 빙고판 영역 */
+.bingo-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.bingo-header {
+    margin-bottom: var(--spacing-md);
+}
+
+.bingo-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bingo-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    background: #f0f0f0;
+    padding: 8px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.bingo-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    border: 2px solid #d0d0d0;
+    border-radius: 5px;
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 45px;
+}
+
+.bingo-cell:hover:not(.colored) {
+    transform: scale(1.05);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+}
+
+.bingo-cell.highlight {
+    border-color: var(--gold);
+    border-width: 4px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+    }
+}
+
+.bingo-cell.colored {
+    color: var(--white);
+    cursor: not-allowed;
+    border-color: transparent;
+}
+
+.bingo-cell.colored::after {
+    content: attr(data-player);
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* 플레이어 현황 */
+.player-status {
+    border-top: 2px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: 6px;
+    flex-shrink: 0;
+}
+
+.status-list {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.status-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.status-item.current {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white);
+}
+
+/* ==================== 모달 ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-lg);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: var(--spacing-lg);
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--primary);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+}
+
+.modal-footer {
+    padding: var(--spacing-lg);
+    border-top: 2px solid #e0e0e0;
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+/* 규칙 리스트 */
+.rules-list {
+    list-style: none;
+    counter-reset: rules-counter;
+}
+
+.rules-list li {
+    counter-increment: rules-counter;
+    margin-bottom: var(--spacing-lg);
+    padding-left: 40px;
+    position: relative;
+}
+
+.rules-list li::before {
+    content: counter(rules-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.rules-list strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+}
+
+.rules-list p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* 승리 모달 */
+.win-modal {
+    text-align: center;
+}
+
+.winner-announcement {
+    margin: var(--spacing-xl) 0;
+}
+
+.winner-name {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-sm);
+}
+
+.winner-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.game-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.stat-item i {
+    font-size: 24px;
+    color: var(--primary);
+}
+
+/* ==================== 반응형 디자인 ==================== */
+@media (max-width: 1200px) {
+    .game-main {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .selection-area {
+        max-width: 380px;
+        margin: 0 auto;
+    }
+    
+    .bingo-board {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .number-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1400px) {
+    .game-main {
+        grid-template-columns: 280px 1fr;
+    }
+    
+    .number-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 14px;
+    }
+    
+    .bingo-cell {
+        font-size: 14px;
+        min-height: 42px;
+    }
+    
+    .bingo-board {
+        max-width: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 28px;
+    }
+    
+    .game-title-small {
+        font-size: 20px;
+    }
+    
+    .turn-display {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+    
+    .turn-player-name {
+        font-size: 20px;
+    }
+    
+    .turn-hint {
+        font-size: 13px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .number-btn {
+        font-size: 18px;
+        width: 70px;
+        height: 70px;
+    }
+    
+    .bingo-cell {
+        font-size: 16px;
+    }
+    
+    .calculation-display {
+        font-size: 20px;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+    
+    .status-list {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .screen {
+        padding: var(--spacing-sm);
+    }
+    
+    .start-container {
+        padding: var(--spacing-lg);
+    }
+    
+    .game-container {
+        padding: var(--spacing-md);
+    }
+    
+    .number-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .number-btn {
+        font-size: 16px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .bingo-cell {
+        font-size: 14px;
+    }
+    
+    .modal-content {
+        margin: var(--spacing-sm);
+    }
+}

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>햄버거 만들기</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 시작 화면 -->
+    <div id="startScreen" class="screen active">
+        <div class="header">
+            <div class="logo">🍔 햄버거 만들기</div>
+        </div>
+        <div class="content-wrapper">
+            <h1 class="main-title">햄버거 만들기</h1>
+            <div class="intro-message">
+                <div class="chef-icon">👨‍🍳</div>
+                <p>"행버거 만들어주세요!<br>
+                달걀부침 1개, 고기 패티 2개, 치즈 3개,<br>
+                양배추 2개 넣어주세요!"</p>
+            </div>
+            <div class="game-stages">
+                <div class="stage-card">
+                    <div class="stage-number">1단계</div>
+                    <div class="stage-title">주문서 작성</div>
+                    <p>분수로 재료 표현하기</p>
+                </div>
+                <div class="stage-card">
+                    <div class="stage-number">2단계</div>
+                    <div class="stage-title">햄버거 만들기</div>
+                    <p>주문서 보고 만들기</p>
+                </div>
+                <div class="stage-card">
+                    <div class="stage-number">3단계</div>
+                    <div class="stage-title">도전 모드</div>
+                    <p>분수 보고 만들기</p>
+                </div>
+            </div>
+            <button class="btn-large btn-primary" onclick="startGame()">게임 시작</button>
+            <button class="btn-large btn-secondary" onclick="goToStep3()" style="margin-top: 15px;">3단계 바로가기</button>
+        </div>
+    </div>
+
+    <!-- 1단계: 주문서 작성 -->
+    <div id="step1Screen" class="screen">
+        <div class="header">
+            <div class="logo">🍔 햄버거 만들기</div>
+        </div>
+        <div class="content-wrapper">
+            <h2 class="step-title">1단계: 주문서를 작성해요!</h2>
+            <p class="step-subtitle">손님의 주문을 보고, 필요한 재료를 분수로 표현해보세요.</p>
+            
+            <div class="step1-container">
+                <!-- 왼쪽: 손님 주문 -->
+                <div class="customer-order">
+                    <div class="chef-icon-large">👨‍🍳</div>
+                    <div class="speech-bubble">
+                        <p>"행버거 만들어주세요!<br>
+                        <span class="highlight">달걀부침 1개, 고기 패티 2개, 치즈 3개, 양배추 2개</span> 넣어주세요!"</p>
+                    </div>
+                </div>
+
+                <!-- 중앙: 재료 카드 -->
+                <div class="ingredients-section">
+                    <h3>우리가 가진 재료</h3>
+                    <div class="ingredients-grid">
+                        <div class="ingredient-card" data-ingredient="egg">
+                            <div class="ingredient-visual" style="background: #FFF9E6;">
+                                <div class="food-items">
+                                    <span class="food-icon egg"></span>
+                                    <span class="food-icon egg"></span>
+                                    <span class="food-icon egg"></span>
+                                </div>
+                            </div>
+                            <div class="ingredient-label">
+                                <span class="ingredient-name">달걀부침</span>
+                                <span class="ingredient-count">총 3개</span>
+                            </div>
+                        </div>
+
+                        <div class="ingredient-card" data-ingredient="patty">
+                            <div class="ingredient-visual" style="background: #F5E6D3;">
+                                <div class="food-items">
+                                    <span class="food-icon patty"></span>
+                                    <span class="food-icon patty"></span>
+                                    <span class="food-icon patty"></span>
+                                    <span class="food-icon patty"></span>
+                                </div>
+                            </div>
+                            <div class="ingredient-label">
+                                <span class="ingredient-name">고기 패티</span>
+                                <span class="ingredient-count">총 4개</span>
+                            </div>
+                        </div>
+
+                        <div class="ingredient-card" data-ingredient="cheese">
+                            <div class="ingredient-visual" style="background: #FFF9E6;">
+                                <div class="food-items">
+                                    <span class="food-icon cheese"></span>
+                                    <span class="food-icon cheese"></span>
+                                    <span class="food-icon cheese"></span>
+                                    <span class="food-icon cheese"></span>
+                                    <span class="food-icon cheese"></span>
+                                    <span class="food-icon cheese"></span>
+                                </div>
+                            </div>
+                            <div class="ingredient-label">
+                                <span class="ingredient-name">치즈</span>
+                                <span class="ingredient-count">총 6개</span>
+                            </div>
+                        </div>
+
+                        <div class="ingredient-card" data-ingredient="cabbage">
+                            <div class="ingredient-visual" style="background: #E8F5E9;">
+                                <div class="food-items">
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                    <span class="food-icon cabbage"></span>
+                                </div>
+                            </div>
+                            <div class="ingredient-label">
+                                <span class="ingredient-name">양배추</span>
+                                <span class="ingredient-count">총 8개</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 주문서 -->
+                <div class="order-form">
+                    <div class="order-header">
+                        <span class="order-icon">📋</span>
+                        <h3>주문서</h3>
+                    </div>
+
+                    
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>재료</th>
+                                <th>전체 수량</th>
+                                <th>주문 수량</th>
+                                <th>분수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ingredient="egg">
+                                <td class="ingredient-name-cell">달걀부침</td>
+                                <td class="total-cell">3개</td>
+                                <td class="order-cell">1개</td>
+                                <td class="fraction-cell">
+                                    <div class="fraction-input">
+                                        <input type="number" class="numerator" min="0" max="3" placeholder="분자" data-ingredient="egg">
+                                        <div class="fraction-line"></div>
+                                        <input type="number" class="denominator" value="3" readonly>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-ingredient="patty">
+                                <td class="ingredient-name-cell">고기 패티</td>
+                                <td class="total-cell">4개</td>
+                                <td class="order-cell">2개</td>
+                                <td class="fraction-cell">
+                                    <div class="fraction-input">
+                                        <input type="number" class="numerator" min="0" max="4" placeholder="분자" data-ingredient="patty">
+                                        <div class="fraction-line"></div>
+                                        <input type="number" class="denominator" value="4" readonly>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-ingredient="cheese">
+                                <td class="ingredient-name-cell">치즈</td>
+                                <td class="total-cell">6개</td>
+                                <td class="order-cell">3개</td>
+                                <td class="fraction-cell">
+                                    <div class="fraction-input">
+                                        <input type="number" class="numerator" min="0" max="6" placeholder="분자" data-ingredient="cheese">
+                                        <div class="fraction-line"></div>
+                                        <input type="number" class="denominator" value="6" readonly>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-ingredient="cabbage">
+                                <td class="ingredient-name-cell">양배추</td>
+                                <td class="total-cell">8개</td>
+                                <td class="order-cell">2개</td>
+                                <td class="fraction-cell">
+                                    <div class="fraction-input">
+                                        <input type="number" class="numerator" min="0" max="8" placeholder="분자" data-ingredient="cabbage">
+                                        <div class="fraction-line"></div>
+                                        <input type="number" class="denominator" value="8" readonly>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-large btn-secondary" onclick="showStartScreen()">처음으로</button>
+                <button class="btn-large btn-primary" onclick="checkStep1Answer()">주문서 완성!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2단계: 햄버거 만들기 -->
+    <div id="step2Screen" class="screen">
+        <div class="header">
+            <div class="logo">🍔 햄버거 만들기</div>
+        </div>
+        <div class="content-wrapper">
+            <h2 class="step-title">2단계: 햄버거를 만들어요!</h2>
+            <p class="step-subtitle">주문서를 보고 달걀부침부터 순서대로 재료를 쌓아주세요.</p>
+
+            <div class="step2-container">
+                <!-- 왼쪽: 완성된 주문서 -->
+                <div class="completed-order">
+                    <div class="order-header">
+                        <span class="order-icon">📋</span>
+                        <h3>완성된 주문서</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="next-ingredient-label">다음 재료: <span id="nextIngredient">달걀부침</span></div>
+                        <table class="summary-table">
+                            <thead>
+                                <tr>
+                                    <th>재료</th>
+                                    <th>전체 수량</th>
+                                    <th>분수 표현</th>
+                                    <th>주문량</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderSummaryBody">
+                                <!-- JavaScript로 채워질 예정 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 중앙: 햄버거 만들기 영역 -->
+                <div class="burger-building-area">
+                    <div class="target-area-label">다음 재료: <span class="highlight-text" id="currentIngredientLabel">달걀부침</span></div>
+                    <div class="burger-plate">
+                        <div id="burgerStack" class="burger-stack">
+                            <div class="plate-bottom">🍽️</div>
+                        </div>
+                        <p class="instruction-text">이곳에 재료를 쌓아주세요</p>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 재료 선택 -->
+                <div class="ingredients-palette">
+                    <p class="instruction-text" style="margin: 0 0 15px 0; padding: 10px; font-size: 14px; color: #333; background: #fff3cd; border-radius: 8px; text-align: left; border-left: 4px solid #ffc107; font-weight: 500;">💡 재료를 클릭하거나 드래그해서 햄버거를 만드세요!</p>
+                    <h3>재료</h3>
+                    <div class="palette-grid" id="ingredientsPalette">
+                        <div class="palette-item" data-type="egg" draggable="true" onclick="addIngredientToBurger('egg')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">달걀부침</span>
+                        </div>
+                        <div class="palette-item" data-type="patty" draggable="true" onclick="addIngredientToBurger('patty')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">고기 패티</span>
+                        </div>
+                        <div class="palette-item" data-type="cheese" draggable="true" onclick="addIngredientToBurger('cheese')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">치즈</span>
+                        </div>
+                        <div class="palette-item" data-type="cabbage" draggable="true" onclick="addIngredientToBurger('cabbage')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">양배추</span>
+                        </div>
+                        <div class="palette-item" data-type="top-bun" draggable="true" onclick="addIngredientToBurger('top-bun')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">위 빵</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-large btn-secondary" onclick="removeLastIngredient()">재료 빼기</button>
+                <button class="btn-large btn-gray" onclick="resetBurger()">다시 쌓기</button>
+                <button class="btn-large btn-primary" onclick="checkBurger()">햄버거 완성!</button>
+            </div>
+            <div class="button-group" style="margin-top: 20px;">
+                <button class="btn-large btn-outline" onclick="showStartScreen()">🏠 처음으로</button>
+                <button class="btn-large btn-success" onclick="goToStep3()">➡️ 3단계로 가기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">🎉</div>
+            <h2>축하합니다!</h2>
+            <p id="successMessage">잘 완성했어요!</p>
+            <button class="btn-large btn-primary" onclick="closeModal()">확인</button>
+        </div>
+    </div>
+
+    <!-- 3단계: 도전 모드 -->
+    <div id="step3Screen" class="screen">
+        <div class="header">
+            <div class="logo">🍔 햄버거 만들기</div>
+        </div>
+        <div class="content-wrapper">
+            <h2 class="step-title">3단계: 도전! 햄버거 만들기 🎯</h2>
+            <p class="step-subtitle">컴퓨터가 만든 주문서를 보고 똑같이 햄버거를 만들어보세요!</p>
+
+            <div class="step3-container">
+                <!-- 왼쪽: 랜덤 주문서 -->
+                <div class="random-order">
+                    <div class="order-header">
+                        <span class="order-icon">📋</span>
+                        <h3>주문서</h3>
+                    </div>
+                    <div class="order-details">
+                        <p class="order-instruction">분수를 보고 필요한 개수를 계산하세요!</p>
+                        <table class="random-order-table">
+                            <thead>
+                                <tr>
+                                    <th>재료</th>
+                                    <th>분수 표현</th>
+                                </tr>
+                            </thead>
+                            <tbody id="randomOrderBody">
+                                <!-- JavaScript로 채워질 예정 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn-large btn-secondary" onclick="generateNewOrder()" style="width: 100%; margin-top: 20px;">
+                        🔄 새로운 주문서
+                    </button>
+                </div>
+
+                <!-- 중앙: 햄버거 만들기 영역 -->
+                <div class="burger-building-area">
+                    <div class="target-area-label">다음 재료: <span class="highlight-text" id="currentIngredientLabel3">달걀부침</span></div>
+                    <div class="burger-plate">
+                        <div id="burgerStack3" class="burger-stack">
+                            <div class="plate-bottom">🍽️</div>
+                        </div>
+                        <p class="instruction-text">이곳에 재료를 쌓아주세요</p>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 재료 선택 -->
+                <div class="ingredients-palette">
+                    <p class="instruction-text" style="margin: 0 0 15px 0; padding: 10px; font-size: 14px; color: #333; background: #fff3cd; border-radius: 8px; text-align: left; border-left: 4px solid #ffc107; font-weight: 500;">💡 재료를 클릭하거나 드래그해서 햄버거를 만드세요!</p>
+                    <h3>재료</h3>
+                    <div class="palette-grid" id="ingredientsPalette3">
+                        <div class="palette-item" data-type="egg" draggable="true" onclick="addIngredientStep3('egg')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">달걀부침</span>
+                        </div>
+                        <div class="palette-item" data-type="patty" draggable="true" onclick="addIngredientStep3('patty')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">고기 패티</span>
+                        </div>
+                        <div class="palette-item" data-type="cheese" draggable="true" onclick="addIngredientStep3('cheese')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">치즈</span>
+                        </div>
+                        <div class="palette-item" data-type="cabbage" draggable="true" onclick="addIngredientStep3('cabbage')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">양배추</span>
+                        </div>
+                        <div class="palette-item" data-type="top-bun" draggable="true" onclick="addIngredientStep3('top-bun')">
+                            <div class="palette-visual"></div>
+                            <span class="palette-label">위 빵</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-large btn-secondary" onclick="removeLastIngredientStep3()">재료 빼기</button>
+                <button class="btn-large btn-gray" onclick="resetBurgerStep3()">다시 쌓기</button>
+                <button class="btn-large btn-primary" onclick="checkBurgerStep3()">햄버거 완성!</button>
+            </div>
+            <div class="button-group" style="margin-top: 20px;">
+                <button class="btn-large btn-outline" onclick="showStartScreen()">🏠 처음으로</button>
+                <button class="btn-large btn-success" onclick="generateNewOrder()">🔄 새로운 주문서</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">🎉</div>
+            <h2>축하합니다!</h2>
+            <p id="successMessage">잘 완성했어요!</p>
+            <button class="btn-large btn-primary" onclick="closeModal()">확인</button>
+            <button class="btn-large btn-secondary" id="nextStepButton" onclick="goToNextStep()" style="display: none; margin-top: 10px;">다음 단계로</button>
+        </div>
+    </div>
+
+    <!-- 오류 모달 -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <div class="error-icon">😅</div>
+            <h2>다시 한 번 확인해보세요!</h2>
+            <p id="errorMessage"></p>
+            <button class="btn-large btn-primary" onclick="closeModal()">확인</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

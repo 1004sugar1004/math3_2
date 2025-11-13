@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>들이의 어림왕 🏆</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .cup-container {
+            transition: all 0.3s ease;
+        }
+
+        .cup-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .cup-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        
+        .reference-cup {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .water-level {
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+            transition: height 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .water-level::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.3));
+            animation: wave 3s infinite linear;
+        }
+
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dice {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .dice:hover {
+            transform: scale(1.1);
+        }
+
+        .dice.rolling {
+            animation: roll 0.6s ease-out;
+        }
+
+        @keyframes roll {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+        }
+
+        .player-turn {
+            border: 4px solid #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        .input-field {
+            border: 3px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .trophy {
+            font-size: 4rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #fbbf24;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sound-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .sound-toggle.muted {
+            background: #fee;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <!-- 사운드 토글 버튼 -->
+    <div class="sound-toggle" onclick="toggleSound()" id="soundToggle" title="사운드 켜기/끄기">
+        <i class="fas fa-volume-up text-2xl text-purple-600" id="soundIcon"></i>
+    </div>
+
+    <div class="max-w-7xl mx-auto">
+        <!-- 시작 화면 -->
+        <div id="startScreen" class="game-card p-8 text-center">
+            <h1 class="text-5xl font-black text-purple-600 mb-4">
+                <i class="fas fa-trophy text-yellow-500"></i> 들이의 어림왕
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">컵의 들이를 어림하고 정확하게 맞춰보세요!</p>
+            
+            <div class="mb-8">
+                <label class="block text-lg font-bold text-gray-700 mb-4">플레이어 수를 선택하세요</label>
+                <div class="flex justify-center gap-4">
+                    <button onclick="selectPlayers(2)" class="btn-secondary">2명</button>
+                    <button onclick="selectPlayers(3)" class="btn-secondary">3명</button>
+                    <button onclick="selectPlayers(4)" class="btn-secondary">4명</button>
+                </div>
+            </div>
+
+            <div id="playerNamesSection" class="hidden">
+                <div id="playerInputs" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+                <button onclick="startGame()" class="btn-primary">
+                    <i class="fas fa-play"></i> 게임 시작!
+                </button>
+            </div>
+
+            <div class="mt-8">
+                <button onclick="showLeaderboard()" class="btn-secondary">
+                    <i class="fas fa-medal"></i> 리더보드 보기
+                </button>
+            </div>
+        </div>
+
+        <!-- 1단계: 컵 들이 어림하기 -->
+        <div id="estimationScreen" class="game-card p-8 hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-black text-purple-600 mb-2">
+                    <i class="fas fa-eye"></i> 1단계: 컵의 들이 어림하기
+                </h2>
+                <p class="text-lg text-gray-600">각 컵의 들이를 예상해보세요! (단위: mL)</p>
+                <div class="mt-4">
+                    <span class="text-2xl font-bold text-purple-600">현재 플레이어: <span id="currentEstimator"></span></span>
+                </div>
+            </div>
+
+            <!-- 기준 컵 표시 -->
+            <div class="bg-yellow-50 border-4 border-yellow-400 rounded-2xl p-6 mb-8 max-w-md mx-auto">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold text-yellow-700 mb-4">
+                        <i class="fas fa-ruler"></i> 크기 비교 기준
+                    </h3>
+                    <div class="bg-white rounded-xl p-4 inline-block">
+                        <img src="images/reference-250ml.png" alt="기준 계량컵 250mL" style="height: 180px; object-fit: contain;" class="mx-auto mb-3">
+                        <p class="text-xl font-bold text-gray-800">계량컵</p>
+                        <p class="text-3xl font-black text-yellow-600">250 mL</p>
+                        <p class="text-sm text-gray-600 mt-2">(1컵)</p>
+                    </div>
+                    <p class="text-gray-700 mt-4">👆 이 컵의 크기와 비교해보세요!</p>
+                </div>
+            </div>
+
+            <div id="cupsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <!-- 컵들이 여기에 동적으로 생성됩니다 -->
+            </div>
+
+            <div class="text-center">
+                <button onclick="submitEstimations()" class="btn-primary">
+                    <i class="fas fa-check"></i> 어림 완료!
+                </button>
+            </div>
+        </div>
+
+        <!-- 어림 결과 화면 -->
+        <div id="estimationResultScreen" class="game-card p-8 hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-black text-purple-600 mb-4">
+                    <i class="fas fa-chart-bar"></i> 어림 결과
+                </h2>
+                <p class="text-lg text-gray-600 mb-6">정확도가 높은 순서대로 게임을 진행합니다!</p>
+            </div>
+
+            <div id="estimationResults" class="max-w-2xl mx-auto mb-8">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
+
+            <div class="text-center">
+                <button onclick="startPhase2()" class="btn-primary">
+                    <i class="fas fa-arrow-right"></i> 2단계로 이동
+                </button>
+            </div>
+        </div>
+
+        <!-- 2단계: 들이 맞추기 게임 -->
+        <div id="gameScreen" class="game-card p-8 hidden">
+            <div class="text-center mb-6">
+                <h2 class="text-4xl font-black text-purple-600 mb-2">
+                    <i class="fas fa-gamepad"></i> 2단계: 들이 맞추기 게임
+                </h2>
+                <p class="text-lg text-gray-600 mb-2">목표: <span class="font-bold text-purple-600" id="targetVolume">1000 mL</span>를 정확하게 맞추세요!</p>
+            </div>
+
+            <!-- 게임 규칙 안내 -->
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 border-4 border-blue-300 rounded-2xl p-6 mb-6 max-w-3xl mx-auto">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">🎯</div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">승리 조건</h3>
+                        <div class="space-y-2 text-left">
+                            <p class="text-lg text-gray-700">
+                                <span class="inline-block w-6 h-6 bg-blue-500 text-white rounded-full text-center text-sm font-bold mr-2">1</span>
+                                주사위를 굴려 나온 숫자만큼 물을 옮길 수 있어요
+                            </p>
+                            <p class="text-lg text-gray-700">
+                                <span class="inline-block w-6 h-6 bg-blue-500 text-white rounded-full text-center text-sm font-bold mr-2">2</span>
+                                컵을 선택해서 물을 담으세요
+                            </p>
+                            <p class="text-lg text-gray-700">
+                                <span class="inline-block w-6 h-6 bg-blue-500 text-white rounded-full text-center text-sm font-bold mr-2">3</span>
+                                <span class="font-bold text-purple-600">1000mL에 가장 가까운 사람</span>이 승리합니다! 🏆
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-6">
+                <div class="text-xl font-bold text-purple-600">
+                    현재 턴: <span id="currentPlayerName"></span>
+                </div>
+            </div>
+
+            <!-- 플레이어 상태 표시 -->
+            <div id="playersStatus" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <!-- 플레이어 상태가 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 주사위 영역 -->
+            <div class="text-center mb-8">
+                <div class="mb-4">
+                    <div class="dice mx-auto" id="dice" onclick="rollDice()">
+                        <i class="fas fa-dice"></i>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-700">주사위를 클릭하세요!</p>
+                <p id="diceResult" class="text-2xl font-bold text-purple-600 mt-2"></p>
+            </div>
+
+            <!-- 컵 선택 영역 -->
+            <div id="cupSelectionArea" class="hidden">
+                <div class="bg-yellow-50 border-3 border-yellow-400 rounded-xl p-4 mb-6 max-w-2xl mx-auto">
+                    <p id="cupSelectionMessage" class="text-center text-xl font-bold text-gray-800"></p>
+                </div>
+                
+                <!-- 선택된 컵 목록 -->
+                <div id="selectedCupsList" class="hidden mb-6">
+                    <h3 class="text-center text-2xl font-bold text-purple-600 mb-4">
+                        <i class="fas fa-list-ol"></i> 선택한 순서
+                    </h3>
+                    <!-- 선택된 컵들이 여기에 표시됩니다 -->
+                </div>
+                
+                <div id="cupSelection" class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                    <!-- 선택 가능한 컵들 -->
+                </div>
+                <div class="text-center">
+                    <button id="confirmCupBtn" onclick="confirmCupSelection()" class="btn-primary">
+                        <i class="fas fa-check"></i> 선택 완료
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 게임 결과 화면 -->
+        <div id="resultScreen" class="game-card p-8 text-center hidden">
+            <div class="trophy">🏆</div>
+            <h2 class="text-5xl font-black text-purple-600 mb-4">게임 종료!</h2>
+            <div class="mb-8">
+                <p id="resultTitle" class="text-3xl font-bold text-yellow-500 mb-2">우승자</p>
+                <p class="text-4xl font-black text-purple-600" id="winnerName"></p>
+                <p class="text-xl text-gray-600 mt-2" id="winnerScore"></p>
+            </div>
+
+            <div id="finalRankings" class="max-w-2xl mx-auto mb-8">
+                <!-- 최종 순위가 여기에 표시됩니다 -->
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <button onclick="location.reload()" class="btn-primary">
+                    <i class="fas fa-redo"></i> 다시 하기
+                </button>
+                <button onclick="showLeaderboard()" class="btn-secondary">
+                    <i class="fas fa-medal"></i> 리더보드 보기
+                </button>
+            </div>
+        </div>
+
+        <!-- 리더보드 화면 -->
+        <div id="leaderboardScreen" class="game-card p-8 hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-black text-purple-600 mb-2">
+                    <i class="fas fa-medal"></i> 명예의 전당
+                </h2>
+                <p class="text-lg text-gray-600">역대 최고 기록</p>
+            </div>
+
+            <div id="leaderboardContent" class="max-w-3xl mx-auto mb-8">
+                <!-- 리더보드 내용이 여기에 표시됩니다 -->
+            </div>
+
+            <div class="text-center">
+                <button onclick="hideLeaderboard()" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i> 돌아가기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sounds.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

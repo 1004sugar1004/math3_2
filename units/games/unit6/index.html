@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콩 주머니 던지기 게임 - 수학 3학년</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 시작 화면 -->
+    <div id="startScreen" class="screen active">
+        <div class="container">
+            <div class="title-container">
+                <i class="fas fa-graduation-cap"></i>
+                <h1 class="game-title">콩 주머니 던지기</h1>
+                <p class="subtitle">수학 3학년 - 그림그래프 학습 게임</p>
+            </div>
+            
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> 게임 방법</h3>
+                <ol>
+                    <li>콩 주머니를 클릭하고 드래그하세요</li>
+                    <li>마우스를 놓으면 훌라후프를 향해 던져집니다</li>
+                    <li>훌라후프 안에 넣으면 성공!</li>
+                    <li>모든 모둠이 던진 후 그림그래프로 결과를 확인하세요</li>
+                </ol>
+            </div>
+            
+            <button id="setupButton" class="btn-primary">
+                <i class="fas fa-cog"></i> 게임 설정
+            </button>
+        </div>
+    </div>
+
+    <!-- 설정 화면 -->
+    <div id="setupScreen" class="screen">
+        <div class="container">
+            <div class="title-container">
+                <i class="fas fa-sliders-h"></i>
+                <h1 class="game-title">게임 설정</h1>
+                <p class="subtitle">모둠 구성과 게임 규칙을 설정하세요</p>
+            </div>
+
+            <div class="setup-form">
+                <!-- 기본 설정 -->
+                <div class="setup-section">
+                    <h3><i class="fas fa-gamepad"></i> 기본 설정</h3>
+                    
+                    <div class="form-group">
+                        <label for="numTeams">
+                            <i class="fas fa-users"></i> 모둠 수
+                            <span class="help-text">2 ~ 8개</span>
+                        </label>
+                        <input type="number" id="numTeams" min="2" max="8" value="4">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="playersPerTeam">
+                            <i class="fas fa-user"></i> 한 모둠당 인원
+                            <span class="help-text">1 ~ 6명</span>
+                        </label>
+                        <input type="number" id="playersPerTeam" min="1" max="6" value="3">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bagsPerPlayer">
+                            <i class="fas fa-shopping-bag"></i> 한 명당 던지기 횟수
+                            <span class="help-text">1 ~ 30개</span>
+                        </label>
+                        <input type="number" id="bagsPerPlayer" min="1" max="30" value="5">
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="difficulty">
+                            <i class="fas fa-chart-line"></i> 난이도
+                        </label>
+                        <select id="difficulty">
+                            <option value="easy">쉬움 (성공률 80%)</option>
+                            <option value="normal" selected>보통 (성공률 60%)</option>
+                            <option value="hard">어려움 (성공률 40%)</option>
+                            <option value="expert">전문가 (성공률 20%)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 모둠 이름 설정 -->
+                <div class="setup-section">
+                    <h3><i class="fas fa-edit"></i> 모둠 이름 설정</h3>
+                    <p class="section-description">모둠 수에 맞춰 자동으로 생성됩니다. 원하는 이름으로 변경하세요!</p>
+                    <div id="teamNamesContainer" class="team-names-grid">
+                        <!-- JavaScript로 동적 생성 -->
+                    </div>
+                </div>
+
+                <!-- 버튼 -->
+                <div class="setup-buttons">
+                    <button id="backToStartButton" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i> 돌아가기
+                    </button>
+                    <button id="startGameButton" class="btn-primary">
+                        <i class="fas fa-play"></i> 게임 시작
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 게임 화면 -->
+    <div id="gameScreen" class="screen">
+        <div class="game-header">
+            <div class="header-info">
+                <h2 id="currentTeamName">희망 모둠</h2>
+                <p id="currentPlayerInfo">플레이어 1/3</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <i class="fas fa-bullseye"></i>
+                    <span>라운드: <strong id="currentRound">1/2</strong></span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>남은 주머니: <strong id="bagsRemaining">10</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <!-- 던지기 영역 -->
+            <div class="throw-zone">
+                <div id="beanbag" class="beanbag" draggable="true">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <p class="throw-hint" id="throwHint">콩 주머니를 클릭하여 시작!</p>
+            </div>
+
+            <!-- 타겟 영역 -->
+            <div class="target-zone">
+                <div id="hulahoop" class="hulahoop">
+                    <div class="hoop-inner"></div>
+                    <div class="hoop-center"></div>
+                </div>
+            </div>
+
+            <!-- 파워 게이지 -->
+            <div id="powerGauge" class="power-gauge">
+                <div class="gauge-label">던지기 파워</div>
+                <div class="gauge-bar">
+                    <div id="powerFill" class="gauge-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 현재 점수판 -->
+        <div class="scoreboard">
+            <h3><i class="fas fa-trophy"></i> 현재 점수</h3>
+            <div class="score-grid" id="scoreGrid">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div id="resultScreen" class="screen">
+        <div class="container">
+            <div class="result-header">
+                <i class="fas fa-flag-checkered"></i>
+                <h1>게임 결과</h1>
+                <p class="result-subtitle">모둠별 성공 횟수를 확인하고 그림그래프를 그려보세요!</p>
+            </div>
+
+            <!-- 순위 테이블 -->
+            <div class="result-section">
+                <h2><i class="fas fa-trophy"></i> 모둠별 성공 횟수</h2>
+                <table class="result-table" id="resultTable">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>모둠</th>
+                            <th>콩 주머니 수 (개)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTableBody">
+                        <!-- JavaScript로 동적 생성 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 그림그래프 그리기 영역 -->
+            <div class="result-section">
+                <h2><i class="fas fa-pencil-alt"></i> 그림그래프 그리기</h2>
+                <p class="graph-instruction">
+                    <i class="fas fa-info-circle"></i> 
+                    왼쪽 아이콘 영역에서 콩 주머니 아이콘(<i class="fas fa-shopping-bag" style="color: #f5576c;"></i>)을 드래그하여 각 모둠의 칸에 놓으세요!
+                </p>
+
+                <div class="graph-workspace">
+                    <!-- 아이콘 팔레트 -->
+                    <div class="icon-palette">
+                        <h4><i class="fas fa-palette"></i> 아이콘</h4>
+                        <div id="iconPalette" class="palette-items">
+                            <!-- JavaScript로 동적 생성 -->
+                        </div>
+                        <p class="palette-info">필요한 만큼 드래그하세요<br><small>(1개 아이콘 = 콩주머니 1개)</small></p>
+                    </div>
+
+                    <!-- 표 형식 그래프 영역 -->
+                    <div class="graph-table-area">
+                        <table class="graph-table" id="graphTable">
+                            <thead>
+                                <tr>
+                                    <th class="header-team">모둠</th>
+                                    <th class="header-count" colspan="30">콩 주머니 수 (최대 30개)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="graphTableBody">
+                                <!-- JavaScript로 동적 생성 -->
+                            </tbody>
+                        </table>
+                        <div class="scale-labels" id="scaleLabels">
+                            <!-- JavaScript로 동적 생성 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 버튼 -->
+                <div class="graph-buttons">
+                    <button id="clearGraphButton" class="btn-secondary">
+                        <i class="fas fa-eraser"></i> 지우기
+                    </button>
+                    <button id="checkGraphButton" class="btn-primary">
+                        <i class="fas fa-check"></i> 완성! 확인하기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 정답 확인 결과 -->
+            <div id="graphResult" class="graph-result" style="display: none;">
+                <div class="result-message">
+                    <i class="fas fa-star"></i>
+                    <h3 id="resultTitle">잘했어요!</h3>
+                    <p id="resultMessage">그림그래프를 완성했습니다!</p>
+                </div>
+                <div id="comparisonGrid" class="comparison-grid">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+
+            <!-- 통계 정보 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-crown"></i>
+                    <h3>1등 모둠</h3>
+                    <p id="firstPlace">-</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>평균 점수</h3>
+                    <p id="avgScore">-</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-arrow-up"></i>
+                    <h3>최고 점수</h3>
+                    <p id="maxScore">-</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-arrow-down"></i>
+                    <h3>최저 점수</h3>
+                    <p id="minScore">-</p>
+                </div>
+            </div>
+
+            <button id="restartButton" class="btn-primary">
+                <i class="fas fa-redo"></i> 다시 하기
+            </button>
+        </div>
+    </div>
+
+    <!-- 성공/실패 메시지 -->
+    <div id="feedbackMessage" class="feedback-message">
+        <span id="feedbackText"></span>
+    </div>
+
+    <script src="js/game.js"></script>
+</body>
+</html>
