@@ -51,33 +51,34 @@ body {
 
 /* 홈 버튼 */
 .home-button {
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 20px;
     background: rgba(255, 255, 255, 0.95);
     color: #667eea;
     border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 24px;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    z-index: 9999;
     display: flex;
     align-items: center;
-    gap: 8px;
-    z-index: 1000;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
 }
 
 .home-button:hover {
     background: white;
-    transform: translateX(-5px);
+    transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .home-button:active {
-    transform: translateX(-3px) scale(0.98);
+    transform: scale(0.95);
 }
 
 .title-container {
