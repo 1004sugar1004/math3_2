@@ -113,6 +113,11 @@ const elements = {
     gameScreen: document.getElementById('gameScreen'),
     resultScreen: document.getElementById('resultScreen'),
     
+    // 설정 입력
+    numTeams: document.getElementById('numTeams'),
+    playersPerTeam: document.getElementById('playersPerTeam'),
+    bagsPerPlayer: document.getElementById('bagsPerPlayer'),
+    
     // 게임 화면
     currentTeamName: document.getElementById('currentTeamName'),
     currentPlayerInfo: document.getElementById('currentPlayerInfo'),
@@ -178,12 +183,17 @@ function init() {
 
 // ==================== 바로 게임 시작 ====================
 function startGameDirectly() {
-    // 기본 설정으로 게임 시작 (설정 화면 건너뛰기)
-    gameConfig.numTeams = 4;
-    gameConfig.playersPerTeam = 3;
-    gameConfig.bagsPerPlayer = 5;
+    // 설정값 읽기
+    gameConfig.numTeams = parseInt(elements.numTeams?.value || 4);
+    gameConfig.playersPerTeam = parseInt(elements.playersPerTeam?.value || 3);
+    gameConfig.bagsPerPlayer = parseInt(elements.bagsPerPlayer?.value || 5);
     gameConfig.maxRounds = 1;
     gameConfig.difficulty = 'normal';
+    
+    // 값 검증
+    gameConfig.numTeams = Math.max(2, Math.min(8, gameConfig.numTeams));
+    gameConfig.playersPerTeam = Math.max(1, Math.min(6, gameConfig.playersPerTeam));
+    gameConfig.bagsPerPlayer = Math.max(1, Math.min(10, gameConfig.bagsPerPlayer));
     
     // 모둠 생성 (기본 이름 사용)
     gameState.teams = [];
