@@ -221,13 +221,13 @@ function startGame() {
     // 설정 값 읽기
     gameConfig.numTeams = parseInt(elements.numTeams.value);
     gameConfig.playersPerTeam = parseInt(elements.playersPerTeam.value);
-    gameConfig.bagsPerPlayer = Math.min(5, Math.max(1, parseInt(elements.bagsPerPlayer.value))); // 1~5로 제한
+    gameConfig.bagsPerPlayer = Math.min(30, Math.max(1, parseInt(elements.bagsPerPlayer.value))); // 1~30으로 제한
     gameConfig.maxRounds = 1; // 항상 1라운드로 고정
     gameConfig.difficulty = elements.difficulty.value;
     
     // 던지기 횟수 검증
-    if (gameConfig.bagsPerPlayer < 1 || gameConfig.bagsPerPlayer > 5) {
-        alert('던지기 횟수는 1~5개 사이여야 합니다.');
+    if (gameConfig.bagsPerPlayer < 1 || gameConfig.bagsPerPlayer > 30) {
+        alert('던지기 횟수는 1~30개 사이여야 합니다.');
         return;
     }
     
