@@ -43,13 +43,10 @@ body {
 }
 
 /* ==================== 시작 화면 ==================== */
-#startScreen, #setupScreen {
+#startScreen {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#startScreen {
     cursor: pointer;
 }
 
