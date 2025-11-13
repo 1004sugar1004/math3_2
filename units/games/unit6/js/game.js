@@ -169,7 +169,7 @@ function init() {
     if (homeButton) {
         homeButton.addEventListener('click', goHome);
     }
-    elements.setupButton.addEventListener('click', showSetupScreen);
+    elements.setupButton.addEventListener('click', startGameDirectly);
     elements.backToStartButton.addEventListener('click', () => switchScreen('startScreen'));
     elements.startGameButton.addEventListener('click', startGame);
     elements.restartButton.addEventListener('click', resetGame);
@@ -182,6 +182,36 @@ function init() {
     // 콩 주머니 클릭 이벤트 (타이밍 게임)
     elements.beanbag.addEventListener('click', onBeanbagClick);
     elements.beanbag.addEventListener('touchend', onBeanbagClick);
+}
+
+// ==================== 바로 게임 시작 ====================
+function startGameDirectly() {
+    // 기본 설정으로 게임 시작 (설정 화면 건너뛰기)
+    gameConfig.numTeams = 4;
+    gameConfig.playersPerTeam = 3;
+    gameConfig.bagsPerPlayer = 5;
+    gameConfig.maxRounds = 1;
+    gameConfig.difficulty = 'normal';
+    
+    // 모둠 생성 (기본 이름 사용)
+    gameState.teams = [];
+    for (let i = 0; i < gameConfig.numTeams; i++) {
+        gameState.teams.push({
+            name: defaultTeamNames[i],
+            players: gameConfig.playersPerTeam,
+            score: 0,
+            color: colorPalette[i % colorPalette.length].color,
+            class: colorPalette[i % colorPalette.length].class
+        });
+    }
+    
+    // 게임 상태 초기화
+    resetGameState();
+    
+    // 게임 화면으로 전환
+    switchScreen('gameScreen');
+    updateUI();
+    createScoreboard();
 }
 
 // ==================== 설정 화면 표시 ====================
@@ -276,12 +306,6 @@ function switchScreen(screenId) {
         screen.classList.remove('active');
     });
     document.getElementById(screenId).classList.add('active');
-    
-    // 화면 전환 시 맨 위로 스크롤
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 // ==================== UI 업데이트 ====================
