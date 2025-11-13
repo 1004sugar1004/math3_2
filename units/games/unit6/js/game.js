@@ -187,6 +187,14 @@ function init() {
 function showSetupScreen() {
     switchScreen('setupScreen');
     updateTeamNameInputs();
+    
+    // 스크롤을 아래로 이동
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100);
 }
 
 function updateTeamNameInputs() {
@@ -253,6 +261,14 @@ function startGame() {
     switchScreen('gameScreen');
     updateUI();
     createScoreboard();
+    
+    // 스크롤을 아래로 이동
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100);
 }
 
 
