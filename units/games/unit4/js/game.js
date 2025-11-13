@@ -638,3 +638,8 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('들이의 어림왕 게임이 시작되었습니다!');
     gameSounds.playGameStart();
 });
+
+// 홈으로 이동
+function goHome() {
+    window.location.href = '../../../index.html';
+}

@@ -141,6 +141,29 @@
             box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
         }
 
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #667eea;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .home-button:hover {
+            background: white;
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
         .input-field {
             border: 3px solid #e5e7eb;
             border-radius: 10px;
@@ -210,6 +233,9 @@
     </style>
 </head>
 <body class="p-4">
+    <!-- 홈 버튼 -->
+    <button class="home-button" onclick="goHome()">🏠 홈으로</button>
+    
     <!-- 사운드 토글 버튼 -->
     <div class="sound-toggle" onclick="toggleSound()" id="soundToggle" title="사운드 켜기/끄기">
         <i class="fas fa-volume-up text-2xl text-purple-600" id="soundIcon"></i>

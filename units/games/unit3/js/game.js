@@ -951,3 +951,8 @@ function resetGame() {
     updateScores();
     gameState.gamePhase = 'mode-select';
 }
+
+// 홈으로 이동
+function goHome() {
+    window.location.href = '../../../index.html';
+}

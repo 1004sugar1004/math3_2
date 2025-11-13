@@ -446,3 +446,8 @@ soundToggleBtn.addEventListener('click', () => {
 
 // 초기 플레이어 입력 필드 생성
 updatePlayerInputs(2);
+
+// 홈으로 이동
+function goHome() {
+    window.location.href = '../../../index.html';
+}

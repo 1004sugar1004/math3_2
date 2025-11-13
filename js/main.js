@@ -42,22 +42,22 @@ function goToUnit(unitNumber) {
     body.style.transform = 'scale(0.98)';
     
     setTimeout(() => {
-        // 단원별 페이지로 이동
+        // 단원별 게임 페이지로 직접 이동
         switch(unitNumber) {
             case 1:
-                window.location.href = 'units/unit1.html';
+                window.location.href = 'units/games/unit1/index.html';
                 break;
             case 2:
-                window.location.href = 'units/unit2.html';
+                window.location.href = 'units/games/unit2/index.html';
                 break;
             case 3:
-                window.location.href = 'units/unit3.html';
+                window.location.href = 'units/games/unit3/index.html';
                 break;
             case 4:
-                window.location.href = 'units/unit4.html';
+                window.location.href = 'units/games/unit4/index.html';
                 break;
             case 5:
-                window.location.href = 'units/unit5.html';
+                window.location.href = 'units/games/unit5/index.html';
                 break;
             case 6:
                 window.location.href = 'units/games/unit6/index.html';

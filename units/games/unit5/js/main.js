@@ -840,3 +840,7 @@ function checkBurgerStep3() {
         showSuccessModal('🎉 완벽해요! 주문서대로 정확하게 만들었어요! 🍔<br><br>"새로운 주문서" 버튼을 눌러 계속 도전하세요!');
     }
 }
+// 홈으로 이동
+function goHome() {
+    window.location.href = '../../../index.html';
+}

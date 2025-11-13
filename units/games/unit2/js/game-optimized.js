@@ -787,3 +787,8 @@ function toggleGameRules() {
 
 // 초기화
 window.onload = () => UI.showScreen('startScreen');
+
+// 홈으로 이동
+function goHome() {
+    window.location.href = '../../../index.html';
+}
