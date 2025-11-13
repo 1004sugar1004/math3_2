@@ -169,7 +169,18 @@ function init() {
     if (homeButton) {
         homeButton.addEventListener('click', goHome);
     }
-    elements.setupButton.addEventListener('click', startGameDirectly);
+    
+    // 시작 화면 클릭시 게임 시작
+    const startScreen = document.getElementById('startScreen');
+    if (startScreen) {
+        startScreen.addEventListener('click', (e) => {
+            // 홈 버튼 클릭이 아닌 경우에만 게임 시작
+            if (!e.target.closest('.home-button')) {
+                startGameDirectly();
+            }
+        });
+    }
+    
     elements.backToStartButton.addEventListener('click', () => switchScreen('startScreen'));
     elements.startGameButton.addEventListener('click', startGame);
     elements.restartButton.addEventListener('click', resetGame);
