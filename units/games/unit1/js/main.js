@@ -66,6 +66,9 @@ startGameBtn.addEventListener('click', () => {
     startScreen.classList.remove('active');
     gameScreen.classList.add('active');
     
+    // 화면 전환 시 맨 위로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     initGameUI();
 });
 
@@ -426,6 +429,9 @@ backToStartBtn.addEventListener('click', () => {
     winModal.classList.remove('active');
     gameScreen.classList.remove('active');
     startScreen.classList.add('active');
+    
+    // 화면 전환 시 맨 위로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // 사운드 토글 버튼

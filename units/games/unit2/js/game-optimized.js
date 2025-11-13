@@ -173,6 +173,9 @@ const UI = {
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(screenId).classList.add('active');
+        
+        // 화면 전환 시 맨 위로 스크롤
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     
     hide(...elements) {

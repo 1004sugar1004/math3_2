@@ -276,6 +276,12 @@ function switchScreen(screenId) {
         screen.classList.remove('active');
     });
     document.getElementById(screenId).classList.add('active');
+    
+    // 화면 전환 시 맨 위로 스크롤
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 // ==================== UI 업데이트 ====================
