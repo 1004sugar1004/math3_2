@@ -221,8 +221,20 @@ main {
 .unit-description {
     font-size: 1rem;
     color: var(--text-light);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     line-height: 1.6;
+}
+
+.unit-reference {
+    font-size: 0.85rem;
+    color: #666;
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 3px solid #667eea;
+    line-height: 1.4;
+    font-weight: 500;
 }
 
 /* 놀이하기 버튼 */
