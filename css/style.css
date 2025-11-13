@@ -226,15 +226,16 @@ main {
 }
 
 .unit-reference {
-    font-size: 0.85rem;
-    color: #666;
-    background: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 8px;
+    font-size: 0.75rem;
+    color: #999;
+    background: rgba(248, 249, 250, 0.5);
+    padding: 6px 10px;
+    border-radius: 6px;
     margin-bottom: 20px;
-    border-left: 3px solid #667eea;
-    line-height: 1.4;
-    font-weight: 500;
+    border-left: 2px solid rgba(102, 126, 234, 0.3);
+    line-height: 1.3;
+    font-weight: 400;
+    opacity: 0.8;
 }
 
 /* 놀이하기 버튼 */
